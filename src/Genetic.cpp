@@ -39,9 +39,13 @@ void Genetic::generateSolution() {
         selection();
         cross();
         mutation();
-        for (int i = 0; i < 2; ++i) {
-            _currentPopulation[i].chromosome = _tabu.generateSolution(_currentPopulation[i].chromosome);
-            _currentPopulation[i].cost = _tabu.getSolutionCost();
+        if (_numEvaluations % 50 == 0) {
+            for (int i = 0; i < 2; ++i) {
+                _currentPopulation[i].chromosome = _tabu.generateSolution(_currentPopulation[i].chromosome);
+                _currentPopulation[i].cost = _tabu.getSolutionCost();
+                _currentPopulation[i].evaluated = true;
+                _numEvaluations++;
+            }
         }
         reEval();
         replacement();
@@ -238,9 +242,10 @@ void Genetic::selectRabble(vector<int> &rabblePositions, const int numRabbles) {
 void Genetic::replacement() {
     vector<int> rabblePos;
     selectRabble(rabblePos, 2);
-//    Utils::logElitesAndRabbles(&_initialPopulation, &_currentPopulation, elitePos, rabblePos, _log);
     for (int i = 0; i < 2; ++i) {
-        _initialPopulation[rabblePos[i]] = _currentPopulation[i];
+        _initialPopulation[rabblePos[i]].chromosome = _currentPopulation[i].chromosome;
+        _initialPopulation[rabblePos[i]].cost = _currentPopulation[i].cost;
+        _initialPopulation[rabblePos[i]].evaluated = _currentPopulation[i].evaluated;
     }
     _log += "\n\n";
 }

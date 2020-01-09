@@ -16,17 +16,12 @@ public:
     virtual ~TabuSearch();
 
 private:
-
     int bestNeighbour(pair<int, int> &bestSwap, vector<int> &iterVector, const int &iterVectorCost);
-
     bool isTabu(pair<int, int> &swapElements );
-
-    bool candidateIsBetter( const int row, const int column, const int candidate, const bool diversify );
-    bool candidateIsInserted(const vector<int> &partialGenResult, const int candidate);
     //void logSolution(string type, pair<int, int> movement, vector<int> &solutionVector, int cost, int iteration, int environmentSolution);
 
 public:
-    const vector<int>& generateSolution(vector<int> solutionVector);
+    const vector<int>& generateSolution(vector<int>& solutionVector);
     int getSolutionCost() const;
     const string getLog() const;
 

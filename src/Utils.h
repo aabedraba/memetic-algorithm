@@ -40,7 +40,7 @@ namespace Utils {
 
     void writeInFile(int seed, const string type, const string airport, const string &log);
 
-    void getResults(string type, string airportName, int bestCost, double executionTime, string &log);
+    void getResults(string type, string airportName, int bestCost, const vector<int>& bestSolution, double executionTime, string &log);
 
     int calculateSwapCost(vector<int> &solution, const int solutionCost, const pair<int, int> &swapPos, const vector<vector<int>> &fluxMatrix,
                           const vector<vector<int>> &distanceMatrix, const bool simetric);

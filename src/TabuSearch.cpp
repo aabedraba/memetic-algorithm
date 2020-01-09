@@ -6,19 +6,19 @@
 
 TabuSearch::TabuSearch(const Airport *airport) :
         _airport(airport),
-        _sizeVectors(airport->getNumDoors())
-        {
+        _sizeVectors(airport->getNumDoors()) {
 }
 
 TabuSearch::~TabuSearch() {
 
 }
 
-const vector<int> &TabuSearch::generateSolution(vector<int> solutionVector) {
-    _solutionVector = solutionVector;
+const vector<int> &TabuSearch::generateSolution(vector<int>& solutionVector) {
     int iterationsInSolution = 0, movements = 0;
-    vector<int> iterVector = _solutionVector;
-    int iterVectorCost = _solutionCost;
+    vector<int> iterVector = solutionVector;
+    int iterVectorCost = _solutionCost = Utils::solutionCost(solutionVector, _airport->getFluxMatrix(),
+                                                             _airport->getDistanceMatrix(),
+                                                             _airport->isSimetric());
     pair<int, int> bestSwap;
     //TODO PARAMETRIZAR
     while (movements < 500) {
@@ -30,7 +30,7 @@ const vector<int> &TabuSearch::generateSolution(vector<int> solutionVector) {
             iterVectorCost = bestIterationCost;
             movements++;
             if (iterVectorCost < _solutionCost) {
-                _solutionVector = iterVector;
+                solutionVector = iterVector;
                 _solutionCost = iterVectorCost;
                 iterationsInSolution = 0;
             } else {
@@ -39,7 +39,7 @@ const vector<int> &TabuSearch::generateSolution(vector<int> solutionVector) {
         }
         iterationsInSolution = 0;
     }
-    return _solutionVector;
+    return solutionVector;
 }
 
 int TabuSearch::bestNeighbour(pair<int, int> &bestSwap, vector<int> &iterVector, const int &iterVectorCost) {
@@ -68,14 +68,6 @@ bool TabuSearch::isTabu(pair<int, int> &swapElements) {
     for (auto it = _shortTermMemory.begin(); it != _shortTermMemory.end(); ++it)
         if (swapElements == *it)
             return true;
-    return false;
-}
-
-bool TabuSearch::candidateIsInserted(const vector<int> &partialGenResult, const int candidate) {
-    for (int i = 0; i < partialGenResult.size(); ++i) {
-        if (candidate == partialGenResult[i])
-            return true;
-    }
     return false;
 }
 

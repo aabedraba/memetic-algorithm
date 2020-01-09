@@ -1,5 +1,6 @@
--------------madrid01.dat Genetic-ox2-23436383-------------
+-------------madrid03.dat Genetic-ox2-23436383-------------
 
-Best cost: 3100
-Execution time: 0.020830
+Best cost: 4744
+14 19 15 21 20 6 8 3 13 10 11 9 18 5 17 7 0 16 12 1 2 4 
+Execution time: 0.032846
 

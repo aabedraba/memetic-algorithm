@@ -33,7 +33,7 @@ void readParametersFile(vector<string> &parameters) {
 int main() {
     vector<string> parameters;
     readParametersFile(parameters);
-    vector<string> airports = {"madrid01.dat"};
+    vector<string> airports = {"madrid03.dat"};
     vector<int> seeds = {23436383};
     string log;
     for (int j = 0; j < seeds.size(); ++j) {
@@ -44,7 +44,7 @@ int main() {
             int numEvaluation = stoi(parameters[NUM_EVALS], nullptr, 10);
             Genetic *genetic = new Genetic(airport, parameters[CROSSOVER], numEvaluation);
             string type = "Genetic-" + parameters[CROSSOVER] + "-" + to_string(seeds[j]);
-            Utils::getResults(type, airport->getAirportName(), genetic->getBestCost(), genetic->getExecutionTime(), log);
+            Utils::getResults(type, airport->getAirportName(), genetic->getBestCost(), genetic->getBestSolution(), genetic->getExecutionTime(), log);
             //Utils::writeInFile(seeds[j], type, airport->getAirportName(), genetic->getLog());
             delete airport;
             delete genetic;

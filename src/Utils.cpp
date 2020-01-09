@@ -103,11 +103,14 @@ void Utils::logBestSolution(const Chromosome *solution, int cost, string &log) {
     log += "Cost: " + to_string(cost);
 }
 
-void Utils::getResults(string type, string airportName, int bestCost, double executionTime, string &log) {
+void Utils::getResults(string type, string airportName, int bestCost, const vector<int>& bestSolution, double executionTime, string &log) {
     log += "-------------" + airportName + " " + type +  "-------------\n";
     log += "\n";
     log += "Best cost: " + to_string(bestCost) + "\n";
-    log += "Execution time: " + to_string(executionTime) + "\n";
+    for (int i = 0; i < bestSolution.size(); ++i) {
+        log += to_string(bestSolution[i]) + " ";
+    }
+    log += "\nExecution time: " + to_string(executionTime) + "\n";
 }
 
 int Utils::calculateSwapCost(vector<int> &solution, const int solutionCost, const pair<int, int> &swapPos,
@@ -150,37 +153,3 @@ int Utils::partialSwapCost(const vector<int> &solution, const pair<int, int> swa
     }
     return cost;
 }
-
-//const string Utils::getLog(string algorithmType, const string log,  float executionTime, string airportName, int sizeVectors, const vector<int> &solutionVector,
-//                           int solutionCost) {
-//    string solutionLog;
-//    solutionLog += "---------" + algorithmType + " " + airportName + "----------\n";
-//    solutionLog += "Solution:          ";
-//    for (int i = 0; i < sizeVectors; ++i) {
-//        solutionLog += to_string(solutionVector[i]) + " ";
-//    }
-//    solutionLog += "\n";
-//    solutionLog += "Cost:              " + to_string(solutionCost) + '\n';
-//    solutionLog += "Time:              " + to_string(executionTime) + " seconds" + "\n";
-//    solutionLog += "------------------------------------------------------------------------\n\n";
-//    return solutionLog + log;
-//}
-//
-//string Utils::logSolution(string type, pair<int, int> movement, vector<int> &solutionVector, int cost, int iteration,
-//                          int environmentIteration) {
-//    string log;
-//    string space((20 - type.length()), ' ');
-//    if (type == "Initial Solution") {
-//        log += type + space;
-//        for (int i = 0; i < solutionVector.size(); ++i)
-//            log += to_string(solutionVector[i]) + " ";
-//        log += "\n";
-//    } else
-//        log += "Environment:        " + to_string(environmentIteration) + '\n';
-//    if (movement.first != -1)
-//        log += "Movement:           " + to_string(movement.first) + ' ' + to_string(movement.second) + '\n';
-//    log += "Cost:               " + to_string(cost) + "\n";
-//    log += "Iteration           " + to_string(iteration) + "\n";
-//    log += "\n";
-//    return log;
-//}
