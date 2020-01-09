@@ -13,7 +13,7 @@ TabuSearch::~TabuSearch() {
 
 }
 
-const vector<int> &TabuSearch::generateSolution(vector<int>& solutionVector) {
+void TabuSearch::generateSolution(vector<int>& solutionVector) {
     int iterationsInSolution = 0, movements = 0;
     vector<int> iterVector = solutionVector;
     int iterVectorCost = _solutionCost = Utils::solutionCost(solutionVector, _airport->getFluxMatrix(),
@@ -39,7 +39,6 @@ const vector<int> &TabuSearch::generateSolution(vector<int>& solutionVector) {
         }
         iterationsInSolution = 0;
     }
-    return solutionVector;
 }
 
 int TabuSearch::bestNeighbour(pair<int, int> &bestSwap, vector<int> &iterVector, const int &iterVectorCost) {

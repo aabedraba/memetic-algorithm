@@ -41,7 +41,7 @@ void Genetic::generateSolution() {
         mutation();
         if (_numEvaluations % 50 == 0) {
             for (int i = 0; i < 2; ++i) {
-                _currentPopulation[i].chromosome = _tabu.generateSolution(_currentPopulation[i].chromosome);
+                _tabu.generateSolution(_currentPopulation[i].chromosome);
                 _currentPopulation[i].cost = _tabu.getSolutionCost();
                 _currentPopulation[i].evaluated = true;
                 _numEvaluations++;

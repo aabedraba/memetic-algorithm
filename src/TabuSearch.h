@@ -21,7 +21,7 @@ private:
     //void logSolution(string type, pair<int, int> movement, vector<int> &solutionVector, int cost, int iteration, int environmentSolution);
 
 public:
-    const vector<int>& generateSolution(vector<int>& solutionVector);
+    void generateSolution(vector<int>& solutionVector);
     int getSolutionCost() const;
     const string getLog() const;
 
