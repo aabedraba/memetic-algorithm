@@ -1,0 +1,4 @@
+airport = malaga01.dat
+seed = 53597523
+crossover = ox2
+num_evaluaciones = 100
