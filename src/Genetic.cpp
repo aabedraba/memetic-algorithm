@@ -16,6 +16,7 @@ Genetic::Genetic(const Airport *airport, const string crossoverType,
         _initialPopulation(_popSize),
         _currentPopulation(2),
         _totalEvaluations(numEvaluations),
+        _tabu(airport),
         _chromosomeSize(airport->getNumDoors()) {
     for (int ind = 0; ind < _popSize; ++ind) {
         _initialPopulation[ind].chromosome.resize(_chromosomeSize);
@@ -38,6 +39,10 @@ void Genetic::generateSolution() {
         selection();
         cross();
         mutation();
+        for (int i = 0; i < 2; ++i) {
+            _currentPopulation[i].chromosome = _tabu.generateSolution(_currentPopulation[i].chromosome);
+            _currentPopulation[i].cost = _tabu.getSolutionCost();
+        }
         reEval();
         replacement();
         generation++;

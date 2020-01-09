@@ -8,5 +8,4 @@ add_executable(3_memetic_algorithms
         src/Airport.cpp src/Airport.h
         src/Genetic.h src/Genetic.cpp
         src/Utils.h src/Utils.cpp
-        #src/TabuSearch.h src/TabuSearch.cpp
-        )
+        src/TabuSearch.h src/TabuSearch.cpp)

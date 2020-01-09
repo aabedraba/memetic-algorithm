@@ -184,4 +184,3 @@ int Utils::partialSwapCost(const vector<int> &solution, const pair<int, int> swa
 //    log += "\n";
 //    return log;
 //}
-

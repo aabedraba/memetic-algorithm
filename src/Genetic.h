@@ -9,6 +9,7 @@
 #include <tuple>
 #include "Airport.h"
 #include "Utils.h"
+#include "TabuSearch.h"
 
 using namespace std;
 
@@ -57,6 +58,7 @@ private:
     const string _crossOverType;
     const int _popSize;
     const int _chromosomeSize;
+    TabuSearch _tabu;
 
     Population _initialPopulation;
     Population _currentPopulation;
