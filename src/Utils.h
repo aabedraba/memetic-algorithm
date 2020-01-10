@@ -42,11 +42,35 @@ namespace Utils {
 
     void getResults(string type, string airportName, int bestCost, const vector<int>& bestSolution, double executionTime, string &log);
 
-    int calculateSwapCost(vector<int> &solution, const int solutionCost, const pair<int, int> &swapPos, const vector<vector<int>> &fluxMatrix,
-                          const vector<vector<int>> &distanceMatrix, const bool simetric);
+
     int partialSwapCost(const vector<int> &solution, const pair<int, int> swapPositions,
                         const vector<vector<int>> &fluxMatrix, const vector<vector<int>> &distanceMatrix,
                         const bool simetric);
+    struct SwapCostFunctor{
+    public:
+        SwapCostFunctor(const vector<vector<int>> &fluxMatrix,
+                        const vector<vector<int>> &distanceMatrix, const bool simetric):
+                        _fluxMatrix(fluxMatrix), _distanceMatrix(distanceMatrix),
+                        _simetric(simetric)
+        {};
+        int operator()(vector<int> &solution, const int solutionCost, const pair<int, int> &swapPos){
+            int preSwapCost = 0, afterSwapCost = 0;
+            preSwapCost = partialSwapCost(solution, swapPos, _fluxMatrix,
+                                          _distanceMatrix,
+                                          _simetric);
+            swap(solution[swapPos.first], solution[swapPos.second]);
+            afterSwapCost = partialSwapCost(solution, swapPos, _fluxMatrix,
+                                            _distanceMatrix,
+                                            _simetric);
+            swap(solution[swapPos.first], solution[swapPos.second]);
+            return solutionCost + afterSwapCost - preSwapCost;
+        }
+    private:
+        const vector<vector<int>> _fluxMatrix;
+        const vector<vector<int>> _distanceMatrix;
+        const bool _simetric;
+
+    };
 //    const string getLog(string algorithmType, const string log, float time, string airportName, int sizeVectors, const vector<int> &solutionVector,
 //                        int solutionCost);
 //    string logSolution(string type, pair<int, int> movement, vector<int> &solutionVector, int cost, int iteration, int environmentIteration);

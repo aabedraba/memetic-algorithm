@@ -1,17 +1,21 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <chrono>
-
 #include "Utils.h"
 #include "Airport.h"
-#include "Genetic.h"
+#include "Memetic.h"
+#include "TabuSearch.h"
 
 enum value {
-    AIRPORT = 0,
-    SEED = 1,
-    CROSSOVER = 2,
-    NUM_EVALS = 3,
+    AIRPORT,
+    SEED,
+    S_CROSSOVER,
+    S_NUM_EVALS,
+    S_CROSSOVER_CHANCE,
+    S_MUTATION_CHANCE,
+    S_POPULATION_TO_EVOLVE,
+    S_TOURNAMENT_SIZE,
+    T_GENERATIONS,
+    T_ITERATIONS_IN_SOLUTION,
+    T_TABU_LIST_SIZE,
+    T_TABU_ENVIROMENTS_TO_GENERATE
 };
 
 void readParametersFile(vector<string> &parameters) {
@@ -33,19 +37,34 @@ void readParametersFile(vector<string> &parameters) {
 int main() {
     vector<string> parameters;
     readParametersFile(parameters);
-    vector<string> airports = {"madrid03.dat"};
-    vector<int> seeds = {23436383};
+    //TAKING ALL PARAMETERS HERE FOR FASTER DEVELOPMENT
+    vector<string> airports = {"madrid01.dat", "madrid02.dat", "madrid03.dat", "madrid04.dat",
+                               "malaga01.dat", "malaga02.dat", "malaga03.dat", "malaga04.dat"};
+    vector<int> seeds = {70911512, 53597523, 53911043, 53916131, 70911512};
     string log;
     for (int j = 0; j < seeds.size(); ++j) {
         for (int i = 0; i < airports.size(); ++i) {
             string file = "../_data/" + airports[i];
             srand(seeds[j]);
             Airport *airport = new Airport(file);
-            int numEvaluation = stoi(parameters[NUM_EVALS], nullptr, 10);
-            Genetic *genetic = new Genetic(airport, parameters[CROSSOVER], numEvaluation);
-            string type = "Genetic-" + parameters[CROSSOVER] + "-" + to_string(seeds[j]);
-            Utils::getResults(type, airport->getAirportName(), genetic->getBestCost(), genetic->getBestSolution(), genetic->getExecutionTime(), log);
-            //Utils::writeInFile(seeds[j], type, airport->getAirportName(), genetic->getLog());
+            const int numEvaluation = stoi(parameters[S_NUM_EVALS], nullptr, 10);
+            const int crossOverChance = stoi(parameters[S_CROSSOVER_CHANCE]);
+            const int populationToEvolve = stoi(parameters[S_POPULATION_TO_EVOLVE]);
+            const int mutationChance = stoi(parameters[S_MUTATION_CHANCE]);
+            const int tournamentSize = stoi(parameters[S_TOURNAMENT_SIZE]);
+            const int generations = stoi(parameters[T_GENERATIONS]);
+            const int iterationsInSolution = stoi(parameters[T_ITERATIONS_IN_SOLUTION]);
+            const int tabuListSize = stoi(parameters[T_TABU_LIST_SIZE]);
+            const int enviromentsToGenerate = stoi(parameters[T_TABU_ENVIROMENTS_TO_GENERATE]);
+            TabuSearch *tabu = new TabuSearch(airport, generations, iterationsInSolution, tabuListSize,
+                                              enviromentsToGenerate);
+            Memetic *genetic = new Memetic(airport, tabu, parameters[S_CROSSOVER], numEvaluation, populationToEvolve,
+                                           crossOverChance, mutationChance, tournamentSize);
+            string type =
+                    "Memetic-" + parameters[S_CROSSOVER] + "-" + parameters[S_NUM_EVALS] + "-" + to_string(seeds[j]);
+            Utils::getResults(type, airport->getAirportName(), genetic->getBestCost(), genetic->getBestSolution(),
+                              genetic->getExecutionTime(), log);
+            Utils::writeInFile(seeds[j], type, airport->getAirportName(), genetic->getLog());
             delete airport;
             delete genetic;
         }
@@ -57,8 +76,6 @@ int main() {
         fs << log << endl;
     } else
         throw "File not properly opened!";
-
-
 
 
     return 0;

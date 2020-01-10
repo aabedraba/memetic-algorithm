@@ -1,4 +1,12 @@
 airport = madrid02.dat
 seed = 53597523
-crossover = ox2
-num_evaluaciones = 100
+stationary_crossover = moc
+stationary_gen_num_evaluations = 500
+stationary_gen_crossover_chance = 100
+stationary_mutation_chance(100-chance) = 95
+stationary_population_to_evolve = 2
+stationary_tournament_size = 2
+tabu_generations = 500
+tabu_iteration_in_solution = 100
+tabu_tabu_list_size = 5
+tabu_enviroments_to_generate = 10

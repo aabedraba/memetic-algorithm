@@ -113,27 +113,12 @@ void Utils::getResults(string type, string airportName, int bestCost, const vect
     log += "\nExecution time: " + to_string(executionTime) + "\n";
 }
 
-int Utils::calculateSwapCost(vector<int> &solution, const int solutionCost, const pair<int, int> &swapPos,
-                             const vector<vector<int>> &fluxMatrix,
-                             const vector<vector<int>> &distanceMatrix, const bool simetric) {
-    int preSwapCost = 0, afterSwapCost = 0;
-    preSwapCost = partialSwapCost(solution, swapPos, fluxMatrix,
-                                  distanceMatrix,
-                                  simetric);
-    swap(solution[swapPos.first], solution[swapPos.second]);
-    afterSwapCost = partialSwapCost(solution, swapPos, fluxMatrix,
-                                    distanceMatrix,
-                                    simetric);
-    swap(solution[swapPos.first], solution[swapPos.second]);
-    return solutionCost + afterSwapCost - preSwapCost;
-}
-
 int Utils::partialSwapCost(const vector<int> &solution, const pair<int, int> swapPositions,
                            const vector<vector<int>> &fluxMatrix,
                            const vector<vector<int>> &distanceMatrix, const bool simetric) {
     int cost = 0;
-    int swap1 = swapPositions.first;
-    int swap2 = swapPositions.second;
+    const int swap1 = swapPositions.first;
+    const int swap2 = swapPositions.second;
     if (simetric) {
         for (int i = 0; i < solution.size(); i++) {
             if (i != swap1) cost += 2 * fluxMatrix[swap1][i] * distanceMatrix[solution[swap1]][solution[i]];
