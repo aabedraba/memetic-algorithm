@@ -40,7 +40,7 @@ int main() {
     //TAKING ALL PARAMETERS HERE FOR FASTER DEVELOPMENT
     vector<string> airports = {"madrid01.dat", "madrid02.dat", "madrid03.dat", "madrid04.dat",
                                "malaga01.dat", "malaga02.dat", "malaga03.dat", "malaga04.dat"};
-    vector<int> seeds = {70911512, 53597523, 53911043, 53916131, 70911512};
+    vector<int> seeds = {23436383, 53597523, 53916131, 53911043, 70911512};
     string log;
     for (int j = 0; j < seeds.size(); ++j) {
         for (int i = 0; i < airports.size(); ++i) {

@@ -1,6 +1,6 @@
 airport = madrid02.dat
 seed = 53597523
-stationary_crossover = moc
+stationary_crossover = ox2
 stationary_gen_num_evaluations = 500
 stationary_gen_crossover_chance = 100
 stationary_mutation_chance(100-chance) = 95
